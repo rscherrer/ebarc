@@ -3,4 +3,4 @@ project(ebarc)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(ebarc main.cpp)
+add_executable(ebarc main.cpp random.cpp random.h individual.cpp individual.h)
