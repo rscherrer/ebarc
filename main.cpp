@@ -16,7 +16,7 @@
 ========================================================================================================*/
 
 // Global parameters
-double dispersalRate = 0.6;
+double dispersalRate = 0.001;
 size_t initialPopSize = 100u;
 double outflow = 0.001;
 double habitatAsymmetry = 0.5;
@@ -29,7 +29,7 @@ size_t timeForScreenshot = 1u;
 // Global constants that are externally called
 double mutationRate = 0.001;
 double mutationalEffect = 0.01;
-double ecoSelCoeff = 0.2;
+double ecoSelCoeff = 1.0;
 
 std::ofstream logFile, datFile;
 
