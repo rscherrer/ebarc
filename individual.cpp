@@ -5,6 +5,7 @@
 #include "individual.h"
 #include "random.h"
 #include <cmath>
+#include <cassert>
 
 // Call to external variables
 extern double ecoSelCoeff;
@@ -17,10 +18,12 @@ individual::individual(pointer_ind parent) {
     // Initialize trait value
     ecologicalTraitValue = parent->get_trait_value();
 
-    // Mutate
+    // Mutate (with boundary conditions: the trait is constrained between -1 and 1)
     bool isMutation = rnd::bernoulli(mutationRate);
     if(isMutation) {
-        ecologicalTraitValue = rnd::normal(ecologicalTraitValue, mutationalEffect);
+        do {
+            ecologicalTraitValue = rnd::normal(ecologicalTraitValue, mutationalEffect);
+        } while(ecologicalTraitValue <= -1.0 || ecologicalTraitValue >= 1.0);
     }
 
     // Initialize attack rates
@@ -29,6 +32,10 @@ individual::individual(pointer_ind parent) {
 
     // Initialize habitat
     habitat = parent->get_habitat();
+
+    // Security check
+    assert(ecologicalTraitValue <= 1.0);
+    assert(ecologicalTraitValue >= -1.0);
 
 }
 
