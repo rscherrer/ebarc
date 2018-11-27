@@ -5,7 +5,6 @@
 #include "individual.h"
 #include "random.h"
 #include <cmath>
-#include <cassert>
 
 // Call to external variables
 extern double ecoSelCoeff;
@@ -32,10 +31,6 @@ individual::individual(pointer_ind parent) {
 
     // Initialize habitat
     habitat = parent->get_habitat();
-
-    // Security check
-    assert(ecologicalTraitValue <= 1.0);
-    assert(ecologicalTraitValue >= -1.0);
 
 }
 

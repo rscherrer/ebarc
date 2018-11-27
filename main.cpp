@@ -3,7 +3,6 @@
 #include <set>
 #include <list>
 #include <utility>
-#include <cassert>
 #include <fstream>
 #include <sstream>
 #include <string>
