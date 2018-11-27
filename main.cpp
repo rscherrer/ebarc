@@ -22,9 +22,9 @@ double outflow = 0.001;
 double habitatAsymmetry = 0.5;
 double survivalRate = 0.5;
 double basalGrowth = 4.0;
-size_t Tmax = 10u;
-size_t timeToRecord = 1u;
-size_t timeForScreenshot = 1u;
+size_t Tmax = 10000u;
+size_t timeToRecord = 100u;
+size_t timeForScreenshot = 1000u;
 
 // Global constants that are externally called
 double mutationRate = 0.001;
