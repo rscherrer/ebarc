@@ -504,6 +504,8 @@ int main(int argc, char * argv[]) {
         // Simulation loop
         while(timestep <= Tmax) {
 
+            std::clog << "t = " << timestep << std::endl; // use when debug
+
             // Dispersal
             dispersal(population);
 
