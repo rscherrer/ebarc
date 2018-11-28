@@ -14,13 +14,11 @@
                                            Global parameters
 ========================================================================================================*/
 
-// some change I made
-
 // Global parameters
 double dispersalRate = 0.001;
 size_t initialPopSize = 100u;
 double outflow = 0.001;
-double habitatAsymmetry = 0.5;
+double habitatAsymmetry = 0.0;
 double survivalRate = 0.5;
 double basalGrowth = 4.0;
 size_t Tmax = 10000u;
@@ -352,6 +350,9 @@ void record_data(const size_t &timestep, const std::list<pointer_ind> &populatio
     // Calculate isolation statistics
     const double spatialIsolation = (popSizeH0E0 * popSizeH1E1 - popSizeH0E1 * popSizeH1E0) / sqrt((popSizeH0E0 + popSizeH0E1) * (popSizeH1E0 + popSizeH1E1) * (popSizeH0E0 + popSizeH1E0) * (popSizeH0E1 + popSizeH1E1));
     const double ecologicalIsolation = 1.0 - ((popSizeH0E0 + popSizeH1E0) * varianceE0 + (popSizeH0E1 + popSizeH1E1) * varianceE1) / (popSize * totalVariance);
+
+    // Security check
+    if(spatialIsolation > 1.0) throw std::logic_error("your spatial isolation goes nuts");
 
     // Write to data file
     datFile << popSize << ';' << popSizeH0E0 << ';' << popSizeH0E1 << ';' << popSizeH1E0 << ';' << popSizeH1E1 << ';';
