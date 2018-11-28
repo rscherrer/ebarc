@@ -334,10 +334,11 @@ void record_data(const size_t &timestep, const std::list<pointer_ind> &populatio
 
     // Calculate the mean trait values with the accumulated values
     const double meanTraitValue = (sumTraitValuesH0E0 + sumTraitValuesH0E1 + sumTraitValuesH1E0 + sumTraitValuesH1E1) / popSize;
-    const double meanTraitValueH0E0 = sumTraitValuesH0E0 / popSizeH0E0;
-    const double meanTraitValueH0E1 = sumTraitValuesH0E1 / popSizeH0E1;
-    const double meanTraitValueH1E0 = sumTraitValuesH1E0 / popSizeH1E0;
-    const double meanTraitValueH1E1 = sumTraitValuesH1E1 / popSizeH1E1;
+    double meanTraitValueH0E0, meanTraitValueH0E1, meanTraitValueH1E0, meanTraitValueH1E1;
+    if(popSizeH0E0 != 0u) meanTraitValueH0E0 = sumTraitValuesH0E0 / popSizeH0E0;
+    if(popSizeH0E1 != 0u) meanTraitValueH0E1 = sumTraitValuesH0E1 / popSizeH0E1;
+    if(popSizeH1E0 != 0u) meanTraitValueH1E0 = sumTraitValuesH1E0 / popSizeH1E0;
+    if(popSizeH1E1 != 0u) meanTraitValueH1E1 = sumTraitValuesH1E1 / popSizeH1E1;
 
     // Calculate sample variance within each ecotype and total variance
     double varianceE0 = sumOfSquaresE0 - sqr(sumTraitValuesH0E0 + sumTraitValuesH1E0) / (popSizeH0E0 + popSizeH1E0);
@@ -356,7 +357,13 @@ void record_data(const size_t &timestep, const std::list<pointer_ind> &populatio
 
     // Write to data file
     datFile << popSize << ';' << popSizeH0E0 << ';' << popSizeH0E1 << ';' << popSizeH1E0 << ';' << popSizeH1E1 << ';';
-    datFile << meanTraitValue << ';' << meanTraitValueH0E0 << ';' << meanTraitValueH0E1 << ';' << meanTraitValueH1E0 << ';' << meanTraitValueH1E1 << ';';
+    datFile << meanTraitValue << ';';
+
+    if(popSizeH0E0 != 0u) datFile << meanTraitValueH0E0; else datFile << "NA"; datFile << ';';
+    if(popSizeH0E1 != 0u) datFile << meanTraitValueH0E1; else datFile << "NA"; datFile << ';';
+    if(popSizeH1E0 != 0u) datFile << meanTraitValueH1E0; else datFile << "NA"; datFile << ';';
+    if(popSizeH1E1 != 0u) datFile << meanTraitValueH1E1; else datFile << "NA"; datFile << ';';
+
     datFile << resourceH0E0 << ';' << resourceH0E1 << ';' << resourceH1E0 << ';' << resourceH1E1 << ';';
     datFile << spatialIsolation << ';' << ecologicalIsolation << ';';
 
