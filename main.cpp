@@ -71,6 +71,7 @@ void dispersal(std::list<pointer_ind> &population) {
 }
 
 // Resource utilization, where individual receive their payoff
+// Add tests into this function
 void resource_utilization(std::list<pointer_ind> &population) {
 
     // Sort individuals by habitat
@@ -89,6 +90,23 @@ void resource_utilization(std::list<pointer_ind> &population) {
     }
 
     auto habitatLimit = iti; // index of the first individual in habitat 1
+
+    // Security check
+    // Check that individuals were correctly ordered
+    // The sum of habitats from population.begin() to habitatLimit (excl.) should be zero
+    // The product of habitats from habitatLimit (incl.) to population.end() (excl.) should be one
+
+    size_t sumZeros = 0u;
+    for(auto it = population.begin(); it != habitatLimit; ++it)
+        sumZeros += (*it)->get_habitat();
+    if(sumZeros != 0u) throw std::logic_error("inhabitants of habitat 0 were incorrectly assigned");
+
+    size_t prodOnes = 1u;
+    for(auto it = habitatLimit; it != population.end(); ++it)
+        prodOnes *= (*it)->get_habitat();
+    if(prodOnes != 1u) throw std::logic_error("inhabitants of habitat 1 were incorrectly assigned");
+
+    // end of security check
 
     // Prepare to store attack rates within habitat
     std::list<std::pair<double, double>> allAttackRates;
@@ -119,7 +137,12 @@ void resource_utilization(std::list<pointer_ind> &population) {
         resources.first = (hab == 0u ? 1.0 : 1.0 - habitatAsymmetry) / (1 + outflow * consumedResources.first);
         resources.second = (hab == 1u ? 1.0 : 1.0 - habitatAsymmetry) / (1 + outflow * consumedResources.second);
 
-        // Sort the list of attack rates
+        // Break the loop if the local habitat is empty (resource should be full and consumption = 0)
+        // The local habitat is empty if the habitat limit is the beginning (everybody in habitat 1) or the end (everybody in habitat 0) of the population list
+        bool isNobodyHere = habitatLimit == population.begin() || habitatLimit == population.end();
+        if(isNobodyHere) break;
+
+        // Sort the list of attack rates within the local habitat
         allAttackRates.sort(sort_along_tradeoff);
 
         // Prepare to record the ecotype cutoff
