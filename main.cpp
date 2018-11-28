@@ -14,6 +14,8 @@
                                            Global parameters
 ========================================================================================================*/
 
+// some change I made
+
 // Global parameters
 double dispersalRate = 0.001;
 size_t initialPopSize = 100u;
