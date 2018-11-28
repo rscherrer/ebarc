@@ -38,7 +38,7 @@ individual::individual(pointer_ind parent) {
 individual::individual() {
 
     // Initialize trait value
-    ecologicalTraitValue = 1.0;
+    ecologicalTraitValue = -1.0;
 
     // Initialize attack rates
     attackRates.first  = exp(-ecoSelCoeff * sqr(ecologicalTraitValue + 1.0));
