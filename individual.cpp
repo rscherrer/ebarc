@@ -45,7 +45,7 @@ individual::individual() {
     attackRates.second = exp(-ecoSelCoeff * sqr(ecologicalTraitValue - 1.0));
 
     // Initialize habitat
-    habitat = true;
+    habitat = false;
 }
 
 // Dispersion function
